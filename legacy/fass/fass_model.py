@@ -1,5 +1,7 @@
 """
 FASS — Fraud-Adjusted Scalability Scoring (Legacy Module)
+=========================================================
+
 """
 
 import os
