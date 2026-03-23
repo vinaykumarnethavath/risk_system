@@ -18,10 +18,17 @@ Usage:
 
 import argparse
 import json
+# Ensure project root is on path
 import sys
+
+if sys.stdout.encoding.lower() != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except:
+        pass
+
 import os
 
-# Ensure project root is on path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from pipelines.data_pipeline import fetch_all_data
@@ -64,8 +71,20 @@ SAMPLE_HEADLINES = {
 }
 
 
-def get_headlines(ticker: str) -> list:
-    """Get sample headlines for a ticker (placeholder for live news API)."""
+def get_headlines(ticker: str, company_name: str = None) -> list:
+    """Get headlines using live news API with fallback to samples."""
+    try:
+        # Try live news API first
+        from services.news_api import get_live_headlines
+        live_headlines = get_live_headlines(ticker, company_name)
+        if live_headlines:
+            return live_headlines
+    except ImportError:
+        print("Warning: News API not available, using sample headlines")
+    except Exception as e:
+        print(f"Warning: Live news failed: {e}, using sample headlines")
+    
+    # Fallback to sample headlines
     if ticker in SAMPLE_HEADLINES:
         return SAMPLE_HEADLINES[ticker]
     return [
@@ -106,7 +125,7 @@ def run_pipeline(ticker: str, period: str = "1y") -> dict:
     # ── Step 2: Fraud Analysis ───────────────────────────────────
     print("\n[2/6] Running forensic fraud analysis...")
     fraud_result = compute_fraud_probability(data["financials"])
-    print(f"  → Fraud probability: {fraud_result['fraud_probability']:.1%} "
+    print(f"  -> Fraud probability: {fraud_result['fraud_probability']:.1%} "
           f"({fraud_result['risk_level']})")
 
     # ── Step 3: Fraud Adjustment ─────────────────────────────────
@@ -114,38 +133,38 @@ def run_pipeline(ticker: str, period: str = "1y") -> dict:
     adjustment_result = compute_adjusted_growth(
         data["financials"], fraud_result["fraud_probability"]
     )
-    print(f"  → Raw growth: {adjustment_result['raw_growth']:.2%}")
-    print(f"  → Adjusted growth: {adjustment_result['adjusted_growth']:.2%}")
-    print(f"  → Trust factor: {adjustment_result['trust_factor']:.2%}")
+    print(f"  -> Raw growth: {adjustment_result['raw_growth']:.2%}")
+    print(f"  -> Adjusted growth: {adjustment_result['adjusted_growth']:.2%}")
+    print(f"  -> Trust factor: {adjustment_result['trust_factor']:.2%}")
 
     # ── Step 4: Market Analysis ──────────────────────────────────
     print("\n[4/6] Computing market confidence...")
     market_result = compute_market_confidence(data["stock"])
-    print(f"  → Market confidence: {market_result['market_confidence']:.1%} "
+    print(f"  -> Market confidence: {market_result['market_confidence']:.1%} "
           f"({market_result['market_signal']})")
-    print(f"  → 30d momentum: {market_result['momentum_30d']:.2%}")
-    print(f"  → Max drawdown: {market_result['max_drawdown']:.2%}")
+    print(f"  -> 30d momentum: {market_result['momentum_30d']:.2%}")
+    print(f"  -> Max drawdown: {market_result['max_drawdown']:.2%}")
 
     # ── Step 5: News Risk ────────────────────────────────────────
     print("\n[5/6] Analysing news sentiment...")
-    headlines = get_headlines(ticker)
+    headlines = get_headlines(ticker, data["info"].get("longName", None))
     news_result = compute_news_risk(headlines)
-    print(f"  → News risk: {news_result['news_risk']:.1%} "
+    print(f"  -> News risk: {news_result['news_risk']:.1%} "
           f"({news_result['risk_level']})")
-    print(f"  → Sentiment: {news_result['mean_sentiment']:.3f}")
-    print(f"  → Headlines analysed: {news_result['headline_count']}")
+    print(f"  -> Sentiment: {news_result['mean_sentiment']:.3f}")
+    print(f"  -> Headlines analysed: {news_result['headline_count']}")
 
     # ── Step 6: Peer Analysis ────────────────────────────────────
     print("\n[6/6] Running peer comparison...")
     peer_result = compute_peer_analysis(ticker)
-    print(f"  → Peer score: {peer_result['peer_score']:.1%} "
+    print(f"  -> Peer score: {peer_result['peer_score']:.1%} "
           f"({peer_result['signal']})")
-    print(f"  → Peers compared: {peer_result['peer_count']}")
+    print(f"  -> Peers compared: {peer_result['peer_count']}")
 
     # ── Final Scoring ────────────────────────────────────────────
-    print("\n" + "─" * 60)
+    print("\n" + "-" * 60)
     print("  Computing True Scalability Score...")
-    print("─" * 60)
+    print("-" * 60)
 
     assessment = generate_full_assessment(
         ticker=ticker,
@@ -184,6 +203,17 @@ def main():
         action="store_true",
         help="Output full results as JSON",
     )
+    parser.add_argument(
+        "--report",
+        action="store_true",
+        help="Generate comprehensive reports (JSON, CSV, HTML, PDF)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="reports",
+        help="Directory for generated reports (default: reports)",
+    )
     args = parser.parse_args()
 
     assessment = run_pipeline(args.ticker, args.period)
@@ -197,6 +227,23 @@ def main():
             "engines": assessment["engines"],
         }
         print("\n" + json.dumps(clean, indent=2, default=str))
+    
+    if args.report:
+        try:
+            from services.report_generator import generate_comprehensive_report
+            print(f"\n📄 Generating comprehensive reports...")
+            generated_files = generate_comprehensive_report(assessment, args.ticker, args.output_dir)
+            
+            print("✅ Reports generated successfully:")
+            for format_type, filepath in generated_files.items():
+                print(f"  {format_type.upper()}: {filepath}")
+            
+            print(f"\n📁 All reports saved to: {args.output_dir}/")
+            
+        except ImportError:
+            print("❌ Report generator not available. Install with: pip install jinja2 weasyprint")
+        except Exception as e:
+            print(f"❌ Report generation failed: {e}")
 
 
 if __name__ == "__main__":

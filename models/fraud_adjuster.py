@@ -78,10 +78,14 @@ def compute_adjusted_growth(
             break
 
     if rev_col is not None:
-        rev = financials[rev_col].dropna()
+        # Sort index ascending so iloc[0] is oldest, iloc[-1] is newest
+        rev = financials[rev_col].dropna().sort_index()
         if len(rev) >= 2:
-            raw_growth = float((rev.iloc[0] - rev.iloc[-1]) / abs(rev.iloc[-1] + 1e-10))
-            adjusted_growth = raw_growth * trust
+            raw_growth = float((rev.iloc[-1] - rev.iloc[0]) / abs(rev.iloc[0] + 1e-10))
+            if raw_growth >= 0:
+                adjusted_growth = raw_growth * trust
+            else:
+                adjusted_growth = raw_growth * (2.0 - trust)
             result["raw_growth"] = round(raw_growth, 4)
             result["adjusted_growth"] = round(adjusted_growth, 4)
             result["fraud_discount"] = round(raw_growth - adjusted_growth, 4)

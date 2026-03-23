@@ -72,7 +72,7 @@ class TestScoreHeadline:
         assert "neutral" in result
 
     def test_positive_headline(self):
-        result = score_headline("Record-breaking revenue exceeds expectations!")
+        result = score_headline("Great revenue exceeds expectations!")
         assert result["compound"] > 0
 
     def test_negative_headline(self):

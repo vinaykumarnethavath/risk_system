@@ -129,7 +129,7 @@ def compute_financial_ratios(ticker: str) -> pd.DataFrame:
         # Revenue growth (quarter-over-quarter)
         if "Total Revenue" in fin.columns:
             rev = fin["Total Revenue"]
-            ratios["revenue_growth"] = rev.pct_change(-1)  # vs previous quarter
+            ratios["revenue_growth"] = rev.pct_change(-1, fill_method=None)  # vs previous quarter
 
         # Profit margin
         if "Net Income" in fin.columns and "Total Revenue" in fin.columns:
@@ -165,22 +165,22 @@ def fetch_all_data(ticker: str, period: str = "1y") -> dict:
     print(f"[Pipeline] Fetching data for {ticker}...")
 
     info = get_company_info(ticker)
-    print(f"  ✓ Company info: {info['name']} ({info['sector']})")
+    print(f"  * Company info: {info['name']} ({info['sector']})")
 
     financials = get_financials(ticker)
-    print(f"  ✓ Quarterly financials: {len(financials)} quarters")
+    print(f"  * Quarterly financials: {len(financials)} quarters")
 
     balance_sheet = get_balance_sheet(ticker)
-    print(f"  ✓ Balance sheet: {len(balance_sheet)} quarters")
+    print(f"  * Balance sheet: {len(balance_sheet)} quarters")
 
     cash_flow = get_cash_flow(ticker)
-    print(f"  ✓ Cash flow: {len(cash_flow)} quarters")
+    print(f"  * Cash flow: {len(cash_flow)} quarters")
 
     stock = get_stock_data(ticker, period=period)
-    print(f"  ✓ Stock data: {len(stock)} trading days")
+    print(f"  * Stock data: {len(stock)} trading days")
 
     ratios = compute_financial_ratios(ticker)
-    print(f"  ✓ Financial ratios computed")
+    print(f"  * Financial ratios computed")
 
     return {
         "info": info,

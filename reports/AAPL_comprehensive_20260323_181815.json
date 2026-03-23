@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "ticker": "AAPL",
+    "report_date": "2026-03-23T18:18:15.031751",
+    "report_version": "2.0",
+    "analysis_period": "1Y",
+    "data_sources": [
+      "yfinance",
+      "news_api",
+      "fraud_detection",
+      "market_analysis"
+    ]
+  },
+  "executive_summary": "EXECUTIVE SUMMARY: Apple Inc. (AAPL)\n\nOVERALL ASSESSMENT: 46.5/100 (Grade: C)\nApple Inc. demonstrates moderate corporate intelligence metrics \nwith a True Scalability Score of 46.5/100, placing it in the C category. \nThe company operates in the Technology sector, specifically Consumer Electronics.\n\nKEY RISK FACTORS:\n• Fraud Risk: 13.6% (LOW) - Normal range\n• Market Confidence: 14.3% (BEARISH) - Bearish market sentiment\n• News Sentiment: 39.8% (LOW) - Mixed/Negative coverage\n• Peer Performance: 41.7% (IN_LINE) - In-line\n\nFINANCIAL HEALTH:\n• Moderate performance\n• Low fraud indicators suggest reliable financial reporting\n• Market sentiment indicates significant concern\n\nRECOMMENDATIONS:\n• HOLD: Moderate metrics suggest wait-and-see approach\n\nNEXT STEPS:\n• Monitor quarterly earnings for consistency\n• Track peer group performance trends\n• Watch for regulatory developments\n• Assess market sentiment changes\n\nReport generated: 2026-03-23 18:18:15",
+  "company_profile": {
+    "name": "Apple Inc.",
+    "sector": "Technology",
+    "industry": "Consumer Electronics",
+    "market_cap": 3644938780672,
+    "country": "United States",
+    "website": "https://www.apple.com",
+    "employees": 150000
+  },
+  "overall_score": {
+    "true_scalability_score": 46.45,
+    "grade": "C",
+    "raw_score": -0.0356,
+    "components": {
+      "adjusted_growth": 0.1353,
+      "fraud_probability": 0.1356,
+      "news_risk": 0.3978,
+      "market_confidence": 0.1435,
+      "peer_score": 0.4167
+    },
+    "signal_contributions": {
+      "growth_contribution": 0.0541,
+      "fraud_penalty": -0.0407,
+      "news_penalty": -0.0796,
+      "market_bonus": 0.043,
+      "peer_bonus": -0.0125
+    }
+  },
+  "detailed_analysis": {
+    "fraud": {
+      "benford_score": 0.0,
+      "benford_flag": false,
+      "statistical_scores": {
+        "revenue_volatility": 0.24555962788306207,
+        "jump_score": 0.0,
+        "margin_stability": 0.01953857655001972,
+        "statistical_risk": 0.1041
+      },
+      "isolation_score": 0.3305,
+      "fraud_probability": 0.1356,
+      "risk_level": "LOW"
+    },
+    "adjustment": {
+      "trust_factor": 0.8644,
+      "fraud_probability": 0.1356,
+      "raw_growth": 0.1565,
+      "adjusted_growth": 0.1353,
+      "fraud_discount": 0.0212,
+      "adjustment_pct": 13.56
+    },
+    "market": {
+      "market_confidence": 0.1435,
+      "market_signal": "BEARISH",
+      "momentum_30d": -0.1075,
+      "momentum_90d": -0.0787,
+      "momentum_180d": 0.1648,
+      "daily_volatility": 0.020012,
+      "annual_volatility": 0.3177,
+      "max_drawdown": -0.2299,
+      "volume_trend": -0.22
+    },
+    "news": {
+      "news_risk": 0.3978,
+      "mean_sentiment": 0.2044,
+      "positive_pct": 0.5,
+      "negative_pct": 0.3,
+      "headline_count": 10,
+      "risk_level": "LOW"
+    },
+    "peer": {
+      "peer_score": 0.4167,
+      "signal": "IN_LINE",
+      "peers_used": [
+        "MSFT",
+        "GOOGL",
+        "META"
+      ],
+      "peer_count": 3
+    }
+  },
+  "risk_breakdown": {
+    "overall_risk_level": "MEDIUM",
+    "primary_risk_factors": [
+      "Weak market confidence"
+    ],
+    "mitigation_factors": []
+  },
+  "comparative_analysis": {
+    "sector_performance": "N/A",
+    "industry_ranking": "N/A",
+    "market_cap_tier": "MEGA_CAP",
+    "growth_vs_peers": "N/A"
+  },
+  "actionable_insights": {
+    "investment_recommendation": "HOLD",
+    "risk_tolerance": "HIGH",
+    "time_horizon": "MEDIUM_TERM",
+    "key_concerns": [
+      "Weak market sentiment may impact short-term performance"
+    ],
+    "opportunities": [],
+    "monitoring_points": [
+      "Quarterly earnings consistency",
+      "Regulatory developments",
+      "Peer group performance",
+      "Market sentiment trends",
+      "News sentiment changes"
+    ]
+  },
+  "data_quality": {
+    "financial_data_completeness": "HIGH",
+    "news_data_coverage": "MEDIUM",
+    "market_data_quality": "HIGH",
+    "peer_comparison_available": true
+  }
+}

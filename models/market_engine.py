@@ -38,9 +38,9 @@ def compute_momentum(stock_df: pd.DataFrame) -> dict:
     result = {}
     for label, days in [("30d", 30), ("90d", 90), ("180d", 180)]:
         if len(close) >= days:
-            mom = float(close.iloc[-1] / close.iloc[-days] - 1)
+            mom = float(close.iloc[-1]) / float(close.iloc[-days]) - 1
         else:
-            mom = float(close.iloc[-1] / close.iloc[0] - 1)
+            mom = float(close.iloc[-1]) / float(close.iloc[0]) - 1
         result[f"momentum_{label}"] = round(mom, 4)
 
     return result
@@ -61,7 +61,7 @@ def compute_volatility(stock_df: pd.DataFrame) -> dict:
         return {"daily_volatility": 0.0, "annual_volatility": 0.0}
 
     returns = close.pct_change().dropna()
-    daily_vol = float(returns.std())
+    daily_vol = float(returns.std().iloc[0]) if hasattr(returns.std(), 'iloc') else float(returns.std())
     annual_vol = daily_vol * np.sqrt(252)
 
     return {
@@ -85,7 +85,8 @@ def compute_max_drawdown(stock_df: pd.DataFrame) -> float:
 
     cummax = close.cummax()
     drawdown = (close - cummax) / cummax
-    return round(float(drawdown.min()), 4)
+    drawdown_min = drawdown.min()
+    return round(float(drawdown_min.iloc[0]) if hasattr(drawdown_min, 'iloc') else float(drawdown_min), 4)
 
 
 def compute_volume_trend(stock_df: pd.DataFrame) -> float:
@@ -110,10 +111,10 @@ def compute_volume_trend(stock_df: pd.DataFrame) -> float:
     recent_avg = vol.tail(20).mean()
     historical_avg = vol.mean()
 
-    if historical_avg == 0:
+    if float(historical_avg) == 0:
         return 0.0
 
-    return round(float(recent_avg / historical_avg - 1), 4)
+    return round(float(recent_avg) / float(historical_avg) - 1, 4)
 
 
 # ─── Composite Market Confidence ────────────────────────────────────

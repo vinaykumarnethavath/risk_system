@@ -135,6 +135,9 @@ def explain_with_template(assessment: dict) -> str:
     elif tss >= 50:
         outlook = "moderate"
         recommendation = "warrants cautious optimism with selective positioning"
+    elif tss >= 30:
+        outlook = "mixed"
+        recommendation = "reflects neutral signals with moderate risk indicators"
     else:
         outlook = "concerning"
         recommendation = "signals elevated risk that demands careful due diligence"
@@ -197,21 +200,19 @@ def explain_with_template(assessment: dict) -> str:
 
     if tss >= 70:
         action = (
-            "We recommend maintaining or initiating a position with a "
-            "medium-term horizon. Monitor quarterly earnings for sustained "
-            "growth trajectory."
+            "We recommend a Buy/Overweight stance based on strong signal convergence."
         )
     elif tss >= 50:
         action = (
-            "We recommend a hold position with close monitoring of fraud "
-            "indicators and market sentiment. Set stop-loss at key "
-            "technical support levels."
+            "We recommend a Hold position with close monitoring."
+        )
+    elif tss >= 30:
+        action = (
+            "We maintain a Neutral stance, watching for better entry points or signal resolution."
         )
     else:
         action = (
-            "We recommend reducing exposure and conducting enhanced "
-            "due diligence. Key risk factors should be resolved before "
-            "considering new positions."
+            "We recommend reducing exposure due to elevated risk factors."
         )
 
     para3 = f"{peer_text} {action}"

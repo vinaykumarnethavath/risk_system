@@ -118,17 +118,13 @@ def _assign_grade(score: float) -> str:
         35–44  → D  (Weak)
          0–34  → F  (Critical Risk)
     """
-    if score >= 85:
-        return "A+"
-    elif score >= 75:
+    if score >= 80:
         return "A"
-    elif score >= 65:
-        return "B+"
-    elif score >= 55:
+    elif score >= 60:
         return "B"
-    elif score >= 45:
+    elif score >= 40:
         return "C"
-    elif score >= 35:
+    elif score >= 20:
         return "D"
     else:
         return "F"

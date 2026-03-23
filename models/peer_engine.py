@@ -225,7 +225,7 @@ def compute_peer_analysis(ticker: str, peer_tickers: list = None) -> dict:
     def get_ytd_return(t):
         data = yf.download(t, period="6mo", progress=False)
         if len(data) >= 2:
-            return float(data["Close"].iloc[-1] / data["Close"].iloc[0] - 1)
+            return float(data["Close"].iloc[-1]) / float(data["Close"].iloc[0]) - 1
         return 0.0
 
     try:

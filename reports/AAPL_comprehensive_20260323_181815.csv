@@ -1,0 +1,19 @@
+Metric,Value,Category
+Ticker,AAPL,Basic Info
+Report Date,2026-03-23,Basic Info
+Company Name,Apple Inc.,Company Info
+Sector,Technology,Company Info
+Industry,Consumer Electronics,Company Info
+Market Cap,3644938780672,Company Info
+True Scalability Score,46.45,Scores
+Grade,C,Scores
+Fraud Probability,0.1356,Risk Analysis
+Fraud Risk Level,LOW,Risk Analysis
+Market Confidence,0.1435,Market Analysis
+Market Signal,BEARISH,Market Analysis
+30D Momentum,-0.1075,Market Analysis
+News Risk,0.3978,Sentiment Analysis
+News Risk Level,LOW,Sentiment Analysis
+Mean Sentiment,0.2044,Sentiment Analysis
+Peer Score,0.4167,Peer Analysis
+Peer Signal,IN_LINE,Peer Analysis

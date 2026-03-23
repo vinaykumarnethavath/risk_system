@@ -1,0 +1,28 @@
+EXECUTIVE SUMMARY: Apple Inc. (AAPL)
+
+OVERALL ASSESSMENT: 45.2/100 (Grade: C)
+Apple Inc. demonstrates moderate corporate intelligence metrics 
+with a True Scalability Score of 45.2/100, placing it in the C category. 
+The company operates in the Technology sector, specifically Consumer Electronics.
+
+KEY RISK FACTORS:
+• Fraud Risk: 13.6% (LOW) - Normal range
+• Market Confidence: 14.3% (BEARISH) - Bearish market sentiment
+• News Sentiment: 46.0% (MEDIUM) - Mixed/Negative coverage
+• Peer Performance: 41.7% (IN_LINE) - In-line
+
+FINANCIAL HEALTH:
+• Moderate performance
+• Low fraud indicators suggest reliable financial reporting
+• Market sentiment indicates significant concern
+
+RECOMMENDATIONS:
+• HOLD: Moderate metrics suggest wait-and-see approach
+
+NEXT STEPS:
+• Monitor quarterly earnings for consistency
+• Track peer group performance trends
+• Watch for regulatory developments
+• Assess market sentiment changes
+
+Report generated: 2026-03-23 17:34:15
